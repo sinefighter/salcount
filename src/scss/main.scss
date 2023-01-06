@@ -1,0 +1,51 @@
+
+/*	-------------------------------------------------
+	Базовые стили сайта | Base site styles
+    ------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+body {
+    font:normal normal 18px/1.3 'Roboto', sans-serif;
+    background:#FFF;
+    color: #303030;
+}
+
+input,
+textarea,
+label,
+select {
+    font:normal normal 18px/1.3 'Roboto', sans-serif;
+}
+
+a { color: inherit; text-decoration:none; }
+a:hover { text-decoration:none; color: inherit; }
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none inside;
+}
+.no-scroll {
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+    overflow-y: hidden;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+html.no-scroll {
+    overflow: hidden;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+/*	-------------------------------------------------
+    Стили блоков, содержимого страниц | Other styles
+    ------------------------------------------------- */
+.wrapper {
+    max-width: 1160px;
+    margin: 0 auto;
+}
