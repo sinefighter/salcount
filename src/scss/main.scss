@@ -3,13 +3,14 @@
 	Базовые стили сайта | Base site styles
     ------------------------------------------------- */
 
+$text-color: #000;
 * {
     box-sizing: border-box;
 }
 body {
-    font:normal normal 18px/1.3 'Roboto', sans-serif;
+    font: normal normal 18px/1.3 'Roboto', sans-serif;
     background:#FFF;
-    color: #303030;
+    color: $text-color;
 }
 
 input,
@@ -17,6 +18,7 @@ textarea,
 label,
 select {
     font:normal normal 18px/1.3 'Roboto', sans-serif;
+    border: 1px solid $text-color;
 }
 
 a { color: inherit; text-decoration:none; }
@@ -46,6 +48,74 @@ html.no-scroll {
     Стили блоков, содержимого страниц | Other styles
     ------------------------------------------------- */
 .wrapper {
-    max-width: 1160px;
+    max-width: 100%;
+    padding: 0 30px;
     margin: 0 auto;
+}
+.add-row {
+    margin: 0 auto;
+    width: 300px;
+    text-align: center;
+}
+form {
+    .input {
+        margin-bottom: 20px;
+    }
+}
+button {
+    border-radius: 10px;
+    background: #169c16;
+    padding: 5px 25px;
+    color: #fff;
+    font: 16px/1.3 Roboto,sans-serif;
+}
+
+.profit-table {
+    table {
+        width: 100%;
+        thead {
+            td {
+                background: rgb(122, 122, 122);
+                color: #fff;
+            }
+        }
+        td {
+            // padding: 10px;
+            border-bottom: 1px solid #000;
+            border-right: 1px solid #000;
+            // line-height: 0;
+            input {
+                width: 100%;
+                border: none;
+                padding-left: 20px;
+                height: 40px;
+            }
+        }
+    }
+    tr:first-child {
+        td {
+            border-left: 1px solid #000;
+            border-top: 1px solid #000;
+        }
+    }
+}
+
+tr.add-new {
+    td {
+        position: relative;
+        button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    }
+    input.error {
+        border: 1px solid #f00;
+    }
+}
+
+.total {
+    padding: 10px;
+    text-align: right;
+    font-size: 22px;
 }

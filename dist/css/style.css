@@ -1,0 +1,124 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/*	-------------------------------------------------
+	Базовые стили сайта | Base site styles
+    ------------------------------------------------- */
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font: normal normal 18px/1.3 "Roboto", sans-serif;
+  background: #FFF;
+  color: #000;
+}
+
+input,
+textarea,
+label,
+select {
+  font: normal normal 18px/1.3 "Roboto", sans-serif;
+  border: 1px solid #000;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none inside;
+}
+
+.no-scroll {
+  width: 100%;
+  position: fixed;
+  overflow: hidden;
+  overflow-y: hidden;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+html.no-scroll {
+  overflow: hidden;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+/*	-------------------------------------------------
+    Стили блоков, содержимого страниц | Other styles
+    ------------------------------------------------- */
+.wrapper {
+  max-width: 100%;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.add-row {
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+}
+
+form .input {
+  margin-bottom: 20px;
+}
+
+button {
+  border-radius: 10px;
+  background: #169c16;
+  padding: 5px 25px;
+  color: #fff;
+  font: 16px/1.3 Roboto, sans-serif;
+}
+
+.profit-table table {
+  width: 100%;
+}
+.profit-table table thead td {
+  background: rgb(122, 122, 122);
+  color: #fff;
+}
+.profit-table table td {
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+.profit-table table td input {
+  width: 100%;
+  border: none;
+  padding-left: 20px;
+  height: 40px;
+}
+.profit-table tr:first-child td {
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+}
+
+tr.add-new td {
+  position: relative;
+}
+tr.add-new td button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+tr.add-new input.error {
+  border: 1px solid #f00;
+}
+
+.total {
+  padding: 10px;
+  text-align: right;
+  font-size: 22px;
+}
