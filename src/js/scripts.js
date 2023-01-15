@@ -167,7 +167,7 @@ function sameDates() {
         return dateArray[0] + '-' + dateArray[1]
     })
 
-    console.log(sameDate);
+    // console.log(sameDate);
 
     const datesForFilter = sameDate.filter((item, i) => {
         return i === sameDate.indexOf(item)
