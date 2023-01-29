@@ -1,12 +1,6 @@
+moment.locale('ru');
 
 let data = []
-
-// async function getData() {
-//     let response = await fetch('https://igor.utr.co.ua/api.php');
-//     console.log(response);
-// }
-
-// getData()
 
 if(localStorage.getItem('data')) {
     data = JSON.parse(localStorage.getItem('data'))
@@ -42,11 +36,49 @@ const table = document.querySelector('.profit-table table tbody')
 
 initApp()
 
+function initApp() {
+    sortByDate()
+    createTable(data)
+    countTotal(data)
+}
+
+function sortByDate(direction = true) {
+    if(direction) {
+        data.sort(function (left, right) {
+            return moment.utc(left.date).diff(moment.utc(right.date))
+        });
+    }else{
+        data.sort(function (left, right) {
+            return moment.utc(right.date).diff(moment.utc(left.date))
+        });
+    }
+}
+
 function createTable(data) {
     table.innerHTML = ''
-    for(row of data) {
-        createRow(row)
-    }
+
+    const monthsBetween = checkMonth(data)
+    // console.log(monthsBetween);
+    monthsBetween.forEach((item) => {
+        let monthCheck = true
+
+        data.forEach((row) => {
+            if(moment(row.date).isBetween(item.start, item.end, undefined, '[]')) {
+                if(monthCheck) {
+                    const newRow = document.createElement("tr")
+                    const newRowTdDate = document.createElement("td")
+                    newRowTdDate.classList.add('row-month')
+                    newRowTdDate.innerHTML = moment(row.date).format('MMMM YYYY')
+                    newRowTdDate.setAttribute('colspan', '3')
+                    newRow.appendChild(newRowTdDate)
+                    table.appendChild(newRow)
+
+                    monthCheck = false
+                }
+                createRow(row)
+            }
+        })
+    })
 }
 
 const cellEdit = document.querySelectorAll('tr:not(.add-new) td input')
@@ -105,13 +137,7 @@ function createRow(row) {
     const newRowTdProject = document.createElement("td")
     const newRowTdProfit = document.createElement("td")
 
-    const dateArray = row.date.split('-')
-
     const momentDay = moment().format(row.date)
-    // console.log(momentDay);
-    // console.log(moment().month(row.date));
-
-    const time = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]).toISOString().substring(0, 10)
 
     newRowTdDate.innerHTML = `<input type="date" name="date" value="${momentDay}" />`
     newRowTdProject.innerHTML = `<input type="text" name="project" value="${row.project}" />`
@@ -138,70 +164,6 @@ function countTotal(dataArray) {
     document.querySelector('.total b').innerHTML = total
 }
 
-function initApp() {
-    createTable(data)
-    countTotal(data)
-    // createFilter()
-}
-
-
-
-// function createFilter() {
-//     const select = document.createElement('select')
-//     const selectDiv = document.querySelector('#filter-date')
-//     selectDiv.appendChild(select)
-
-//     const arrayOptions = sameDates()
-
-//     const option = document.createElement('option')
-//     option.value = 'all'
-//     option.text = 'Show All'
-//     select.appendChild(option)
-
-//     arrayOptions.forEach((item) => {
-//         const option = document.createElement('option')
-//         option.value = item
-//         option.text = item
-//         select.appendChild(option)
-//     })
-// }
-
-// function sameDates() {
-
-//     const newArray = JSON.parse(JSON.stringify(data))
-
-//     const sameDate = newArray.map((item) => {
-//         const dateArray = item.date.split('-')
-//         return dateArray[0] + '-' + dateArray[1]
-//     })
-
-//     // console.log(sameDate);
-
-//     const datesForFilter = sameDate.filter((item, i) => {
-//         return i === sameDate.indexOf(item)
-//     })
-
-//     return datesForFilter
-// }
-
-// const select = document.querySelector('#filter-date select')
-// select.addEventListener('change', function(el){
-//     const optionValue = el.target.value
-
-//     if(optionValue !== 'all') {
-//         const filtredDate = data.filter((item) => {
-//             if(optionValue === item.date.slice(0, item.date.length - 3)) return item
-//         })
-
-//         createTable(filtredDate)
-//         countTotal(filtredDate)
-//     }else{
-//         createTable(data)
-//         countTotal(data)
-//     }
-    
-// })
-
 const filterBtn = document.querySelector('#filter-date button')
 const clearFilterBtn = document.querySelector('#filter-date .clear-filter')
 
@@ -210,18 +172,12 @@ filterBtn.addEventListener('click', function(){
     const from = filterForm.querySelector('input[name=from]').value
     const to = filterForm.querySelector('input[name=to]').value
 
-    console.log(from, to);
-
     const filtredData = data.filter((item) => {
         return moment(item.date).isBetween(from, to, undefined, '[]')
     })
 
-    console.log(filtredData);
-
     createTable(filtredData)
     countTotal(filtredData)
-
-    // moment('2010-10-20').isBetween('2010-10-19', '2010-10-25'); // true
 })
 
 clearFilterBtn.addEventListener('click', function(e) {
@@ -246,6 +202,62 @@ sortSumTd.addEventListener('click', function() {
     }
     switcher = !switcher
 
-    console.log(data);
     createTable(data)
 })
+
+
+// const ctx = document.querySelector('#myChart');
+// const chartData = data.map((item) => {
+//     return {
+//         x: item.date,
+//         y: item.profit,
+//     }
+// })
+
+// console.log(chartData);
+
+// new Chart(ctx, {
+// type: 'line',
+// data: {
+//     datasets: [
+//         { 
+//             data: chartData
+//         }
+//     ]
+// },
+// // options: {
+// //   scales: {
+// //     y: {
+// //       beginAtZero: true
+// //     }
+// //   }
+// // }
+// });
+
+const sortDateTd = document.querySelector('.sort-date')
+
+let sortDateDirection = false
+sortDateTd.addEventListener('click', () => {
+    sortByDate(sortDateDirection)
+    createTable(data)
+    sortDateDirection = !sortDateDirection
+})
+
+
+
+function checkMonth(dataArray) {
+    const monthsBetween = []
+    const months = dataArray.reduce((accumulator, item) => {
+        const monthWord = moment(item.date).format('MMMM')
+        if(accumulator.indexOf(monthWord) === -1) {
+            accumulator.push(monthWord)
+
+            const startOfMonth = moment(item.date).startOf('month').format('YYYY-MM-DD');
+            const endOfMonth   = moment(item.date).endOf('month').format('YYYY-MM-DD');
+            monthsBetween.push({start: startOfMonth, end: endOfMonth})
+        }
+        return accumulator
+    }, [])
+
+    return monthsBetween
+}

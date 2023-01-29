@@ -61,7 +61,7 @@
             <table>
                 <thead>
                     <tr>
-                        <td class="teal lighten-4">Дата</td>
+                        <td class="teal lighten-4 sort-date">Дата <i class="small material-icons">import_export</i></td>
                         <td class="teal lighten-4">Проект</td>
                         <td class="teal lighten-4 sort-sum">Сумма <i class="small material-icons">import_export</i></td>
                     </tr>
@@ -85,9 +85,15 @@
         </div>
     </div>
 </div>
+
+<div class="chart">
+    <canvas id="myChart"></canvas>
+</div>
+
 <!-- Скрипты -->
 	<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script type="text/javascript" src="./js/moment-with-locales.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
 </body>
 </html>
